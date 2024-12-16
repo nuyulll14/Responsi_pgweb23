@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malang Health</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 25px;
+            padding-top: 25px;
+            color: rgb(216, 38, 38);
+        }
+
+        .container {
+            background-color: #5fcb95;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(167, 40, 40, 0.627);
+        }
+
+        .navbar-brand {
+            font-size: 22px;
+        }
+
+        .card-img {
+            object-fit: cover;
+        }
+
+        .card-body p {
+            font-size: 14px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Additional Styling for the Districts Table */
+        table th, table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+
+<body class="d-flex flex-column min-vh-100" style="background-color: #90cbc4">
+
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top navbar-top-menu shadow mb-0s" style="background-color: rgb(63, 193, 137)">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img src='Icon/profilmalang.jpg' alt="" width="60" height="50"> WebGIS Malang Health
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="text-center">Health Services in Malang</h1>
+        
+        <!-- Buttons to toggle content -->
+        <div class="d-flex justify-content-center mb-4">
+            <button id="btn-services" class="btn btn-success me-2">Layanan Kesehatan</button>
+            <button id="btn-table" class="btn btn-info">Tabel</button>
+        </div>
+        
+        <!-- Health Service Cards (Initially Active) -->
+        <div id="services-content" class="tab-content active">
+            <div class="row">
+                <div class="col-md-4 col-lg-4 mb-1 d-flex">
+                    <div class="shadow p-2 mb-2 mt-2 rounded bg-white">
+                        <img class="card-img mb-1 lazyload rounded" src="Data/gambar2.jpg" width="200" height="185" />
+                        <div class="card-body p-2">
+                            <h5 class="card-title text-center">Rumah Sakit</h5>
+                            <p align="justify">
+                                <strong></strong> Kabupaten Malang memiliki berbagai fasilitas kesehatan, salah satunya adalah rumah sakit yang menyediakan layanan medis lengkap. Layanan tersebut terdiri dari:
+                                Layanan IGD
+                                Layanan Rawat Inap
+                                Layanan Rawat Jalan
+                                Layanan Laboratorium
+                                Layanan Radiologi
+                                Layanan Bedah
+                                Layanan Poliklinik Spesialis
+                                Layanan Kebidanan dan Kandungan
+                                Layanan Fisioterapi dan Rehabilitasi Medis
+                                Layanan Farmasi
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-4 mb-1 d-flex">
+                    <div class="shadow p-2 mb-2 mt-2 rounded bg-white">
+                        <img class="card-img mb-1 lazyload rounded" src="Data/gambar1.jpg" width="200" height="185" />
+                        <div class="card-body p-2">
+                            <h5 class="card-title text-center">Puskesmas</h5>
+                            <p align="justify">
+                                <strong></strong> Kabupaten Malang memiliki berbagai fasilitas kesehatan, salah satunya adalah puskesmas yang menyediakan layanan kesehatan dasar bagi masyarakat. Layanan tersebut terdiri dari:
+
+                                Layanan Pemeriksaan Umum
+                                Layanan Kesehatan Ibu dan Anak (KIA),
+                                Layanan Imunisasi, 
+                                Layanan Gizi, 
+                                Layanan Persalinan, 
+                                Layanan Kesehatan Gigi dan Mulut, 
+                                Layanan Penyuluhan dan Promosi Kesehatan, 
+                                Layanan Pencegahan dan Pengendalian Penyakit,
+                                Layanan Laboratorium Sederhana.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-4 mb-1 d-flex">
+                    <div class="shadow p-2 mb-2 mt-2 rounded bg-white">
+                        <img class="card-img mb-1 lazyload rounded" src="Data/gambar3.jpg" width="200" height="185" />
+                        <div class="card-body p-2">
+                            <h5 class="card-title text-center">Apotek</h5>
+                            <p align="justify">
+                                </strong> Kabupaten Malang memiliki berbagai fasilitas kesehatan, salah satunya adalah apotek yang menyediakan layanan kefarmasian untuk memenuhi kebutuhan masyarakat. Layanan tersebut terdiri dari:
+                                Penyediaan Obat Resep, 
+                                Penyediaan Obat Bebas, 
+                                Konsultasi Penggunaan Obat, 
+                                Layanan Racikan Obat, 
+                                Penjualan Alat Kesehatan, 
+                                Layanan Informasi Obat (PIO), 
+                                Layanan Vitamin dan Suplemen, 
+                                Penyediaan Produk Perawatan Kesehatan.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Table (Initially Hidden) -->
+        <div id="table-content" class="tab-content">
+            <h3 class="text-center mt-4">Persebaran Fasilitas Kesehatan di Kecamatan Kabupaten Malang</h3>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Kecamatan</th>
+                        <th scope="col">Jumlah Rumah Sakit</th>
+                        <th scope="col">Jumlah Puskesmas</th>
+                        <th scope="col">Jumlah Apotek</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Malang Kota</td>
+                        <td>5</td>
+                        <td>3</td>
+                        <td>8</td>
+                    </tr>
+                    <tr>
+                        <td>Blimbing</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <td>Sukun</td>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>7</td>
+                    </tr>
+                    <tr>
+                        <td>Kepanjen</td>
+                        <td>6</td>
+                        <td>5</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>Singosari</td>
+                        <td>3</td>
+                        <td>2</td>
+                        <td>4</td>
+                    </tr>
+                    <!-- Add more rows for other districts -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="text-center mt-2">
+        <small class="text-secondary">Copyright &copy; 2023 WebGIS Kabupaten Malang | All Rights Reserved</small>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+
+    <script>
+        // Toggle between Layanan Kesehatan and Tabel
+        document.getElementById('btn-services').addEventListener('click', function() {
+            document.getElementById('services-content').classList.add('active');
+            document.getElementById('table-content').classList.remove('active');
+        });
+
+        document.getElementById('btn-table').addEventListener('click', function() {
+            document.getElementById('table-content').classList.add('active');
+            document.getElementById('services-content').classList.remove('active');
+            fetchHospitalData();  // Fetch data when table is displayed
+        });
+
+        // Fetch hospital data from the backend API
+        function fetchHospitalData() {
+            fetch('http://localhost:3000/api/hospitals') // Adjust this URL if needed
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.getElementById('hospital-table-body');
+                    tableBody.innerHTML = ''; // Clear any existing rows
+                    data.forEach(item => {
+                        const row = document.createElement('tr');
+                        const kecamatanCell = document.createElement('td');
+                        kecamatanCell.textContent = item.kecamatan;
+                        const countCell = document.createElement('td');
+                        countCell.textContent = item.count;
+                        row.appendChild(kecamatanCell);
+                        row.appendChild(countCell);
+                        tableBody.appendChild(row);
+                    });
+                })
+                .catch(error => console.error('Error fetching hospital data:', error));
+        }
+    </script>
+
+</body>
+
+</html>

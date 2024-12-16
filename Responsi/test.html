@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebGIS Fasilitas Kesehatan Malang</title>
+    <!-- CSS Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 100vh; /* Peta layar penuh */
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Elemen untuk Peta -->
+    <div id="map"></div>
+
+    <!-- Script Leaflet -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Inisialisasi Peta
+        var map = L.map('map').setView([-7.9753, 112.6324], 13); // Koordinat pusat peta (Malang)
+
+        // ----------------------
+        // Basemap Layer
+        // ----------------------
+        var openStreetMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap Contributors'
+        }).addTo(map); // Basemap default
+
+        // ----------------------
+        // GeoServer WMS Layer
+        // ----------------------
+        var wmsLayer = L.tileLayer.wms("http://localhost:8080/geoserver/wms", {
+            layers: "responsi_malang:ADMINISTRASIDESA_AR_25K", // Ganti sesuai dengan layer Anda
+            format: "image/png",
+            transparent: true,
+            attribution: 'Data: GeoServer'
+        });
+        wmsLayer.addTo(map);
+
+        // ----------------------
+        // Markers Fasilitas Kesehatan
+        // ----------------------
+        var marker1 = L.marker([-7.9753, 112.6324], { draggable: true }).addTo(map)
+            .bindPopup("Apotek Kimia Farma Malang<br>Alamat: Jl. Semeru No.17, Malang<br>Koordinat: -7.9753, 112.6324");
+        var marker2 = L.marker([-7.9767, 112.6281]).addTo(map)
+            .bindPopup("Apotek K24 Malang<br>Alamat: Jl. Kawi No.12, Malang<br>Koordinat: -7.9767, 112.6281");
+        var marker3 = L.marker([-7.9711, 112.6313]).addTo(map)
+            .bindPopup("Apotek Century Malang<br>Alamat: Jl. Ijen No.5, Malang<br>Koordinat: -7.9711, 112.6313");
+        var marker4 = L.marker([-7.9735, 112.6333]).addTo(map)
+            .bindPopup("RSUD Dr. Saiful Anwar Malang<br>Alamat: Jl. Jaksa Agung Suprapto No.2, Malang<br>Koordinat: -7.9735, 112.6333");
+        var marker5 = L.marker([-7.9690, 112.6231]).addTo(map)
+            .bindPopup("RSU Lavalette Malang<br>Alamat: Jl. WR Supratman No.10, Malang<br>Koordinat: -7.9690, 112.6231");
+        var marker6 = L.marker([-7.9647, 112.6322]).addTo(map)
+            .bindPopup("RS Sumber Waras Malang<br>Alamat: Jl. Arjuno No.45, Malang<br>Koordinat: -7.9647, 112.6322");
+        var marker7 = L.marker([-7.9901, 112.6235]).addTo(map)
+            .bindPopup("RS Hermina Malang<br>Alamat: Jl. Tangkuban Perahu No.8, Malang<br>Koordinat: -7.9901, 112.6235");
+        var marker8 = L.marker([-7.9793, 112.6348]).addTo(map)
+            .bindPopup("Puskesmas Blimbing<br>Alamat: Jl. Blimbing Raya, Malang<br>Koordinat: -7.9793, 112.6348");
+        var marker9 = L.marker([-7.9815, 112.6343]).addTo(map)
+            .bindPopup("Puskesmas Kedungkandang<br>Alamat: Jl. Kedungkandang No.4, Malang<br>Koordinat: -7.9815, 112.6343");
+        var marker10 = L.marker([-7.9641, 112.6370]).addTo(map)
+            .bindPopup("Puskesmas Malang Kota<br>Alamat: Jl. KH Zainul Arifin No.9, Malang<br>Koordinat: -7.9641, 112.6370");
+        var marker11 = L.marker([-7.9770, 112.6314]).addTo(map)
+            .bindPopup("Puskesmas Sukun<br>Alamat: Jl. Sukun Raya No.11, Malang<br>Koordinat: -7.9770, 112.6314");
+
+        // ----------------------
+        // Layer Control
+        // ----------------------
+        var baseLayers = {
+            "OpenStreetMap": openStreetMap
+        };
+
+        var overlayLayers = {
+            "Administrasi Desa (GeoServer)": wmsLayer,
+            "Fasilitas Kesehatan": L.layerGroup([marker1, marker2, marker3, marker4, marker5, marker6, marker7, marker8, marker9, marker10, marker11])
+        };
+
+        // Tambahkan Layer Control
+        L.control.layers(baseLayers, overlayLayers).addTo(map);
+    </script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Metadata -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Judul pada tab browser -->
+    <title>Malang Health</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kdam+Thmor+Pro&family=Montserrat:wght@500&display=swap"
+        rel="stylesheet">
+
+    <!--Fontawesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 25px;
+            padding-top: 25px;
+            color: rgb(255, 255, 255);
+        }
+
+        h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 27px;
+            padding-bottom: 30px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+        crossorigin="anonymous"></script>
+
+    <body class="d-flex flex-column min-vh-100" style="background-color: #90cbc4">
+        <nav class="navbar navbar-expand-lg navbar-dark sticky-top navbar-top-menu shadow mb-0s"
+            style="background-color: rgb(63, 193, 137)">
+            <div class="container">
+                <a class="navbar-brand" href="/">
+                    <img src='Icon/profilmalang.jpg' alt="" width="60" height="50"> WebGIS Malang Health</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html"><i class="fa-solid fa-house-chimney"></i></i>
+                                Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="destinasi.html"><i class="fa-solid fa-location-dot"></i>
+                                Destination</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-map-location-dot"></i> Maps</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="peta_faskes.html">peta_faskes</a></li>
+                                <li><a class="dropdown-item" href="petarute.html">Peta Rute</a></li>
+                                <li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="kontak.html"><i class="fa-solid fa-address-book"></i> Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!--Contact-->
+        <section id="contact">
+            <div class="container mt-4 mb-4">
+                <div class="card">
+                    <div class="col-md-12">
+                        <div class="row text-center mb-1 mt-4">
+                            <div class="col">
+                                <h3>Contact Me</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            <form>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" aria-describedby="email">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="Pesan" class="form-label">Pesan</label>
+                                    <textarea class="form-control" id="Pesan" rows="3"></textarea>
+                                </div>
+                                <div class="text-center mb-3">
+                                    <button type="submit" class="btn btn-primary" align="center">KIRIM</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="card">
+
+        <!-- Footer -->
+        <div class="text-center">
+            <h5>WebGIS FASKES MALANG</h5>
+            <p>Kabupaten Malang</p>
+        </div>
+        <div class="d-flex justify-content-center">
+            <a href="https://www.instagram.com/s_/" class="text-dark me-3"><i
+                    class="fab fa-instagram fa-2x"></i></a>
+            <a href="https://twitter.com/" class="text-dark me-3"><i class="fab fa-twitter fa-2x"></i></a>
+            <a href="https://www.tiktok.com/" class="text-dark me-3"><i class="fab fa-tiktok fa-2x"></i></a>
+        </div>
+
+        <div class="text-center mt-2">
+            <small class="text-secondary">Copyright &copy; 2023 WebGIS Kabupaten Malang | All Rights
+                Reverse</small>
+        </div>
+    </body>
+
+</html>

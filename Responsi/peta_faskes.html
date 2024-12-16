@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malang Health</title>
+
+    <!-- Tab browser icon -->
+    <link rel="icon" type="image/x-icon" href="Icon/profilmalang.jpg">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kdam+Thmor+Pro&family=Montserrat:wght@500&display=swap"
+        rel="stylesheet">
+
+    <!-- Fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Style Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+    <style>
+        #map {
+            height: 570px;
+        }
+
+        .info {
+            padding: 6px 8px;
+            font: 14px/16px Arial, Helvetica, sans-serif;
+            background: white;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .info h2 {
+            margin: 0 0 5px;
+            color: #777;
+        }
+
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 30px;
+            padding-top: 25px;
+            padding-bottom: 20px;
+            color: rgb(255, 255, 255);
+            font-style: bold;
+        }
+
+        h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 27px;
+            padding-bottom: 30px;
+        }
+    </style>
+</head>
+
+<body style="background-color: #90cbaa">
+
+    <!-- Bootstrap Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: rgb(67, 193, 63)">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img src='Icon/profilmalang.jpg' alt="" width="60" height="50"> WebGIS Malang Health</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html"><i class="fa-solid fa-house-chimney"></i> Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="destinasi.html"><i class="fa-solid fa-location-dot"></i> Destination</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-map-location-dot"></i> Maps</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="peta_faskes.php">Peta Faskes</a></li>
+                            <li><a class="dropdown-item" href="petarute.html">Peta Rute</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="kontak.html"><i class="fa-solid fa-address-book"></i> Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-header text-center">
+                <h2>Persebaran Faskes di Malang</h2>
+            </div>
+            <div class="card-body">
+                <div id="map"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS and Leaflet libraries -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <script src="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.min.js"></script>
+    
+    <script>
+        // Inisialisasi Peta
+        var map = L.map('map').setView([-7.9753, 112.6324], 13); // Koordinat pusat peta (Malang)
+
+        // Basemap Layers
+        var basemap1 = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            maxZoom: 19,
+            attribution: 'Map data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        });
+
+        var basemap2 = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}", {
+            attribution: 'Tiles &copy; Esri | <a href="DIVSIGUGM" target="_blank">DIVSIG UGM</a>',
+        });
+
+        var basemap3 = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
+            attribution: 'Tiles &copy; Esri | <a href="Lathan WebGIS" target="_blank">DIVSIG UGM</a>',
+        });
+
+        var basemap4 = L.tileLayer("https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png", {
+            attribution: '&copy; <a href="https://stadiamaps.com" target="_blank">Stadia Maps</a>',
+        });
+
+        // Add the default basemap
+        basemap1.addTo(map);
+
+        // GeoServer WMS Layer
+        var wmsLayer = L.tileLayer.wms("http://localhost:8080/geoserver/wms", {
+            layers: "responsi_malang:ADMINISTRASIDESA_AR_25K", // Ganti sesuai dengan layer Anda
+            format: "image/png",
+            transparent: true,
+            attribution: 'Data: GeoServer'
+        });
+        wmsLayer.addTo(map);
+
+        // Layer Control
+        L.control.layers({
+            "OpenStreetMap": basemap1,
+            "Esri World Street Map": basemap2,
+            "Esri World Imagery": basemap3,
+            "Stadia Dark": basemap4
+        }, {
+            "WMS Layer": wmsLayer
+        }).addTo(map);
+
+        // Example Markers
+        var marker1 = L.marker([-7.9753, 112.6324]).addTo(map).bindPopup("Apotek Kimia Farma Malang");
+        var marker2 = L.marker([-7.9767, 112.6281]).addTo(map).bindPopup("Apotek K24 Malang");
+        var marker3 = L.marker([-7.9395, 112.6209]).addTo(map).bindPopup("Rumah Sakit Umum Permata Bunda<br>Koordinat: -7.9395, 112.6209");
+var marker4 = L.marker([-7.9421, 112.6107]).addTo(map).bindPopup("Puskesmas Dinoyo<br>Koordinat: -7.9421, 112.6107");
+var marker5 = L.marker([-7.9442, 112.6206]).addTo(map).bindPopup("Klinik THT Terpadu Malang<br>Koordinat: -7.9442, 112.6206");
+var marker6 = L.marker([-7.9513, 112.6197]).addTo(map).bindPopup("RSU Brimedika Malang<br>Koordinat: -7.9513, 112.6197");
+var marker7 = L.marker([-7.9687, 112.6123]).addTo(map).bindPopup("Apotek Anugrah<br>Koordinat: -7.9687, 112.6123");
+var marker8 = L.marker([-7.9739, 112.6210]).addTo(map).bindPopup("RSIA Melati Husada<br>Koordinat: -7.9739, 112.6210");
+var marker9 = L.marker([-7.9765, 112.6246]).addTo(map).bindPopup("Klinik Griya Bimo<br>Koordinat: -7.9765, 112.6246");
+var marker10 = L.marker([-7.9714, 112.6251]).addTo(map).bindPopup("Klinik Utama Bunga Melati<br>Koordinat: -7.9714, 112.6251");
+var marker11 = L.marker([-7.9865, 112.6250]).addTo(map).bindPopup("RSI Aisyah<br>Koordinat: -7.9865, 112.6250");
+var marker12 = L.marker([-7.9821, 112.6341]).addTo(map).bindPopup("Apotek Sejati<br>Koordinat: -7.9821, 112.6341");
+var marker13 = L.marker([-7.9757, 112.6386]).addTo(map).bindPopup("Klinik Pratama Malang<br>Koordinat: -7.9757, 112.6386");
+var marker14 = L.marker([-7.9693, 112.6302]).addTo(map).bindPopup("Klinik Bunga Melati JA Suprapto<br>Koordinat: -7.9693, 112.6302");
+var marker15 = L.marker([-7.9657, 112.6379]).addTo(map).bindPopup("Lavalette General Hospital<br>Koordinat: -7.9657, 112.6379");
+
+// Existing markers
+var marker16 = L.marker([-7.9718, 112.6314]).addTo(map).bindPopup("RSUD Dokter Saiful<br>Koordinat: -7.9718, 112.6314");
+var marker17 = L.marker([-7.9624, 112.6408]).addTo(map).bindPopup("Klinik Utama Husada Asih<br>Koordinat: -7.9624, 112.6408");
+var marker18 = L.marker([-7.9638, 112.6411]).addTo(map).bindPopup("Apotek Bengawan<br>Koordinat: -7.9638, 112.6411");
+var marker19 = L.marker([-7.9745, 112.6562]).addTo(map).bindPopup("Klinik Rahayu Husada<br>Koordinat: -7.9745, 112.6562");
+var marker20 = L.marker([-7.9811, 112.6354]).addTo(map).bindPopup("Klinik Utama Melati<br>Koordinat: -7.9811, 112.6354");
+var marker21 = L.marker([-7.9473, 112.6112]).addTo(map).bindPopup("Klinik Rawat Inap Bhakti Husada<br>Koordinat: -7.9473, 112.6112");
+var marker22 = L.marker([-7.9902, 112.6601]).addTo(map).bindPopup("Klinik Mandiri Sehat<br>Koordinat: -7.9902, 112.6601");
+
+// Additional markers
+var marker23 = L.marker([-7.9467, 112.6143]).addTo(map).bindPopup("Apotek Suhat 24 Jam<br>Koordinat: -7.9467, 112.6143");
+var marker24 = L.marker([-7.9625, 112.6118]).addTo(map).bindPopup("Apotek Roxy Malang<br>Koordinat: -7.9625, 112.6118");
+var marker25 = L.marker([-7.9448, 112.6156]).addTo(map).bindPopup("Apotek Kimia Farma Dinoyo<br>Koordinat: -7.9448, 112.6156");
+var marker26 = L.marker([-7.9342, 112.6374]).addTo(map).bindPopup("Apotek K-24 Blimbing<br>Koordinat: -7.9342, 112.6374");
+
+var marker27 = L.marker([-7.9480, 112.6287]).addTo(map).bindPopup("RSIA Galeri Candra<br>Koordinat: -7.9480, 112.6287");
+var marker28 = L.marker([-7.9475, 112.6132]).addTo(map).bindPopup("RS Universitas Brawijaya<br>Koordinat: -7.9475, 112.6132");
+var marker29 = L.marker([-7.9445, 112.6169]).addTo(map).bindPopup("RS Permata Bunda<br>Koordinat: -7.9445, 112.6169");
+var marker30 = L.marker([-7.9328, 112.6487]).addTo(map).bindPopup("RSIA Puri Bunda<br>Koordinat: -7.9328, 112.6487");
+var marker31 = L.marker([-7.9752, 112.6528]).addTo(map).bindPopup("RS Refa Husada<br>Koordinat: -7.9752, 112.6528");
+
+// New markers added with similar syntax
+var marker32 = L.marker([-7.9330, 112.6463]).addTo(map).bindPopup("Klinik Sumber Sehat<br>Koordinat: -7.9330, 112.6463");
+var marker33 = L.marker([-7.9612, 112.6238]).addTo(map).bindPopup("RSUP Dr. Saiful Anwar Malang<br>Koordinat: -7.9612, 112.6238");
+var marker34 = L.marker([-7.9228, 112.6041]).addTo(map).bindPopup("Klinik Sehat Bina Usaha<br>Koordinat: -7.9228, 112.6041");
+var marker35 = L.marker([-7.9459, 112.6220]).addTo(map).bindPopup("Apotek Sehat Rakyat<br>Koordinat: -7.9459, 112.6220");
+var marker36 = L.marker([-7.9197, 112.6175]).addTo(map).bindPopup("Apotek Malang Baru<br>Koordinat: -7.9197, 112.6175");
+
+        // Add more markers as needed
+
+    </script>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>
